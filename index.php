@@ -194,6 +194,18 @@
     }
   }
 
+  function deleteUser($Iduser){
+    global $conn;
+    $table="users";
+    $sql="DELETE FROM `users` WHERE `Iduser`=$Iduser";
+    // echo $sql;
+    try{
+      mysqli_query($conn,$sql);
+      return true;
+    }catch(Exception $e){
+      return false;
+    } 
+  }
  // --------------------------------------------------------------------XU LY REQUEST------------------------------------------------------------------------------- 
 // LAY INFO TEST
 if(isset($_GET['action'])&&$_GET['action']=="getTest"){
@@ -347,6 +359,13 @@ if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
   //
   $array1 = array(
     'status' => updateUser($_POST['Iduser'],$_POST['Username'],$_POST['Name'],$_POST['Permission'],$_POST['Active'],$_POST['Recover'])
+  );
+  echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
+}
+
+if(isset($_GET['action'])&&$_GET['action']=='deleteUser'){
+  $array1 = array(
+    'allUser' => deleteUser($_POST['Iduser'])
   );
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }

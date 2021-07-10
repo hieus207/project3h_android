@@ -154,6 +154,8 @@
     $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
     return $result;
   }
+
+
   function getUser($usn){
     global $conn;
     $table="users";
@@ -177,6 +179,19 @@
     $rs=mysqli_query($conn,$sql);
     $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
     return $result;
+  }
+
+  function updateUser($username,$name,$permission,$recover){
+    global $conn;
+    $table="user";
+    $sql="UPDATE `$table` SET `Username`= '$username' ,`Name`='$name',`Permission`='$permission',`Recover`='$recover' WHERE `Username`= '$username'";
+    // echo $sql;
+    try{
+      mysqli_query($conn,$sql);
+      return true;
+    }catch(Exception $e){
+      return false;
+    }
   }
 
  // --------------------------------------------------------------------XU LY REQUEST------------------------------------------------------------------------------- 
@@ -324,6 +339,14 @@ if(isset($_GET['action'])&&$_GET['action']=='getAllUser'){
   $users=getAllUser();
   $array1 = array(
     'allUser' => $users
+  );
+  echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
+}
+
+if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
+  //
+  $array1 = array(
+    'status' => updateUser($_POST['Username'],$_POST['Name'],$_POST['Permission'],$_POST['Recover'])
   );
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }

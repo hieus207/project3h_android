@@ -181,10 +181,10 @@
     return $result;
   }
 
-  function updateUser($username,$name,$permission,$recover){
+  function updateUser($iduser,$username,$name,$permission,$recover){
     global $conn;
     $table="user";
-    $sql="UPDATE `$table` SET `Username`= '$username' ,`Name`='$name',`Permission`='$permission',`Recover`='$recover' WHERE `Username`= '$username'";
+    $sql="UPDATE `$table` SET `Username`= '$username' ,`Name`='$name',`Permission`='$permission',`Recover`='$recover' WHERE `Iduser`= '$iduser'";
     // echo $sql;
     try{
       mysqli_query($conn,$sql);
@@ -346,7 +346,7 @@ if(isset($_GET['action'])&&$_GET['action']=='getAllUser'){
 if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
   //
   $array1 = array(
-    'status' => updateUser($_POST['Username'],$_POST['Name'],$_POST['Permission'],$_POST['Recover'])
+    'status' => updateUser($_POST['Iduser'],$_POST['Username'],$_POST['Name'],$_POST['Permission'],$_POST['Recover'])
   );
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }

@@ -9,7 +9,7 @@
   die('khong ket noi dc');
   }
 
-//************************ TRUY VAN QUESTION */
+//************************ TRUY VAN QUESTION -----------------------------------------------*/
 
 
   function getQS($id){
@@ -83,6 +83,7 @@
     }
   }
   
+  //************************ TRUY VAN TEST ************************************************/
   function addQStoTest($TestId,$QuesId){
     global $conn;
     $table="test";
@@ -144,6 +145,7 @@
     $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
     return $result;
   }
+  //**************************************************TRUY VAN USER*********************************** */
   function login($usn,$pass){
     global $conn;
     $table="users";
@@ -167,6 +169,17 @@
     // echo $sql;
     mysqli_query($conn,$sql);
   }
+
+  function getAllUser(){
+    global $conn;
+    $table="users";
+    $sql="SELECT * FROM $table";
+    $rs=mysqli_query($conn,$sql);
+    $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
+    return $result;
+  }
+
+ // --------------------------------------------------------------------XU LY REQUEST------------------------------------------------------------------------------- 
 // LAY INFO TEST
 if(isset($_GET['action'])&&$_GET['action']=="getTest"){
   $listqs=array();
@@ -198,7 +211,7 @@ if(isset($_GET['action'])&&$_GET['action']=="getTest"){
   );
   echo (json_encode($array1)); 
 }
-// LAY TEST RANDOM----------------------------------------
+// --------------LAY TEST RANDOM----------------------------------------
 if(isset($_GET['action'])&&$_GET['action']=="getTestRand"){
   $listqs=array();
   $Tests=getTest(-1); 
@@ -242,7 +255,7 @@ if(isset($_GET['action'])&&$_GET['action']=="getTestRand"){
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 
 }
-//----------------------------------------------- QUESTION
+//----------------------------------------------- QUESTION-------------------------------------------------------------//
 if(isset($_GET['action'])&&$_GET['action']=='getAllQS'){
   $questions=getAllQS();
   $array1 = array(
@@ -303,6 +316,14 @@ if(isset($_POST['action'])&&$_POST['action']=='delTest'){
   //
   $array1 = array(
     'status' => delTest($_POST['TestID'])
+  );
+  echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
+}
+// -----------------------------------------------------XU LY USER--------------------------------------------------
+if(isset($_GET['action'])&&$_GET['action']=='getAllUser'){
+  $users=getAllUser();
+  $array1 = array(
+    'allUser' => $users
   );
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }

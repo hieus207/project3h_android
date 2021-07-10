@@ -1,7 +1,9 @@
 <?php
   include_once "Question.php";
   $table = 'test';
-  $conn = mysqli_connect('localhost','id17150368_hieus207','Hieuhieu_0011','id17150368_thiblx');
+  $conn = mysqli_connect('localhost','hieus207','hieuhieu01','thiblx');
+  mysqli_set_charset($conn, 'UTF8');
+//  mysql_query("SET character_set_results=utf8");
   if(!$conn)
   {
   die('khong ket noi dc');
@@ -129,6 +131,8 @@
     $sql="SELECT * FROM $table".$add;
     $rs=mysqli_query($conn,$sql);
     $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
+    //echo $sql;
+   // print_r($result);
     return $result;
   }
 
@@ -192,9 +196,9 @@ if(isset($_GET['action'])&&$_GET['action']=="getTest"){
       'Time' => $time,
       'Listquestion' => $listQS
   );
-  echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
+  echo (json_encode($array1)); 
 }
-// LAY TEST RANDOM
+// LAY TEST RANDOM----------------------------------------
 if(isset($_GET['action'])&&$_GET['action']=="getTestRand"){
   $listqs=array();
   $Tests=getTest(-1); 
@@ -205,19 +209,20 @@ if(isset($_GET['action'])&&$_GET['action']=="getTestRand"){
     array_push($listqs,$test['Listquestion']);
     $time = $test['Time'];
   }
-  // print_r($Tests);
+ // print_r($listqs);
   $listQS = [];
   
   foreach($listqs as $qs){
     $ques=getQS($qs);
     $question=$ques[0];
     $rs=new Question($question['Idquestion'],$question['Questionform'],$question['Content'],$question['Image'],$question['Da1'],$question['Da2'],$question['Da3'],$question['Da4'],$question['Dadung']);
-  //   print_r($question[0]);
+//     print_r($question[0]);
     
     array_push($listQS,$rs);
   //   break;
   }
-  // print_r($listQS);
+//  print_r($listQS);
+//  echo "print xong";
   $array1 = array(
       'Idtest' => $idTest,
       'Time' => $time,

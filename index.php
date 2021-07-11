@@ -367,7 +367,7 @@ if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
 if(isset($_POST['action'])&&$_POST['action']=='deleteUser'){
   $array1 = array(
     'status' => 'true',
-    'message' => deleteUser($_POST['Iduser'])
+    // 'message' => deleteUser($_POST['Iduser'])
   );
 
   //echo "co vao ham del user";

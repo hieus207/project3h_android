@@ -365,8 +365,10 @@ if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
 
 if(isset($_POST['action'])&&$_POST['action']=='deleteUser'){
   $array1 = array(
-    'status' => deleteUser($_POST['Iduser'])
+    'status' => deleteUser($_POST['Iduser']),
+    'message' => 'Co vao ham delete user'
   );
+
   //echo "co vao ham del user";
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }

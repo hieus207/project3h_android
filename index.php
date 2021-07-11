@@ -181,18 +181,18 @@
     return $result;
   }
 
-  // function updateUser($iduser,$username,$name,$permission,$active,$recover){
-  //   global $conn;
-  //   $table="users";
-  //   $sql="UPDATE `$table` SET `Username`= '$username' ,`Name`='$name',`Permission`='$permission',`Active`='$active',`Recover`='$recover' WHERE `Iduser`= '$iduser'";
-  //   // echo $sql;
-  //   try{
-  //     mysqli_query($conn,$sql);
-  //     return true;
-  //   }catch(Exception $e){
-  //     return false;
-  //   }
-  // }
+  function updateUser($iduser,$username,$name,$permission,$active,$recover){
+    global $conn;
+    $table="users";
+    $sql="UPDATE `$table` SET `Username`= '$username' ,`Name`='$name',`Permission`='$permission',`Active`='$active',`Recover`='$recover' WHERE `Iduser`= '$iduser'";
+    // echo $sql;
+    try{
+      mysqli_query($conn,$sql);
+      return true;
+    }catch(Exception $e){
+      return false;
+    }
+  }
 
   function deleteUser($Iduser){
     global $conn;
@@ -201,8 +201,8 @@
    // echo $sql;
     try{
       mysqli_query($conn,$sql);
-      // return true;
-      return $sql;
+      return true;
+      // return $sql;
     }catch(Exception $e){
       return false;
     } 
@@ -359,15 +359,15 @@ if(isset($_GET['action'])&&$_GET['action']=='getAllUser'){
 if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
   //
   $array1 = array(
-    // 'status' => updateUser($_POST['Iduser'],$_POST['Username'],$_POST['Name'],$_POST['Permission'],$_POST['Active'],$_POST['Recover'])
+    'status' => updateUser($_POST['Iduser'],$_POST['Username'],$_POST['Name'],$_POST['Permission'],$_POST['Active'],$_POST['Recover'])
   );
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }
 
 if(isset($_POST['action'])&&$_POST['action']=='deleteUser'){
   $array1 = array(
-    'status' => 'true',
-    // 'message' => deleteUser($_POST['Iduser'])
+    'status' => deleteUser($_POST['Iduser']),
+    'message' => 'thanh cong'
   );
 
   //echo "co vao ham del user";
@@ -390,7 +390,7 @@ if(isset($_POST['action'])&&$_POST['action']=='deleteUser'){
 //    echo sizeof(login($_POST['Username'],$_POST['Password']));
   }
 // REGISTER
-if(isset($_POST['Username'])&&isset($_POST['Password'])&&isset($_POST['Name'])){
+if(isset($_POST['Username'])&&isset($_POST['Password'])&&isset($_POST['Name'])&&!isset($_POST['action'])){
   if(sizeof(getUser($_POST['Username']))==0){
     $Recover = substr(md5(rand()), 0, 8);
     try{

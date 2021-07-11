@@ -198,7 +198,7 @@
     global $conn;
     $table="users";
     $sql="DELETE FROM `users` WHERE `Iduser`=$Iduser";
-    // echo $sql;
+   // echo $sql;
     try{
       mysqli_query($conn,$sql);
       return true;
@@ -363,10 +363,11 @@ if(isset($_POST['action'])&&$_POST['action']=='updateUser'){
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }
 
-if(isset($_GET['action'])&&$_GET['action']=='deleteUser'){
+if(isset($_POST['action'])&&$_POST['action']=='deleteUser'){
   $array1 = array(
-    'allUser' => deleteUser($_POST['Iduser'])
+    'status' => deleteUser($_POST['Iduser'])
   );
+  //echo "co vao ham del user";
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }
 ///----------------------------

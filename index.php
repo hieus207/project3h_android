@@ -213,8 +213,7 @@
 function getAllCmt($testid){
   global $conn;
   $table="comment";
-  $sql="SELECT * FROM $table WHERE Idtest=`$testid`";
-  echo $sql;
+  $sql="SELECT * FROM $table WHERE Idtest=$testid";
   $rs=mysqli_query($conn,$sql);
   $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
   return $result;

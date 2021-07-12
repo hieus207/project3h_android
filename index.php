@@ -207,6 +207,19 @@
       return false;
     } 
   }
+
+//--------------------------------------------------------------------- TRUY VAN CMT ---------------------------------------------------------
+
+function getAllCmt($testid){
+  global $conn;
+  $table="comment";
+  $sql="SELECT * FROM $table WHERE Idtest=`$testid`";
+  $rs=mysqli_query($conn,$sql);
+  $result=mysqli_fetch_all($rs,MYSQLI_ASSOC);
+  return $result;
+}
+
+
  // --------------------------------------------------------------------XU LY REQUEST------------------------------------------------------------------------------- 
 // LAY INFO TEST
 if(isset($_GET['action'])&&$_GET['action']=="getTest"){
@@ -374,6 +387,15 @@ if(isset($_POST['action'])&&$_POST['action']=='deleteUser'){
   echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
 }
 ///----------------------------
+// ---------------------------------------------------- CMT ----------------------------------------------
+if(isset($_GET['action'])&&$_GET['action']=='getAllCmt'){
+  $cmts=getAllCmt($_GET['TestId']);
+  $array1 = array(
+    'allCmt' => $cmts
+  );
+  
+  echo (json_encode($array1,JSON_UNESCAPED_UNICODE)); 
+}
 
 // LOGIN
   if(isset($_POST['Username'])&&isset($_POST['Password'])&&!isset($_POST['Name'])){
